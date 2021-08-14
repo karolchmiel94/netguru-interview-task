@@ -33,13 +33,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # install environment dependencies
 RUN pip3 install --upgrade pip
+RUN pip3 install pipenv
 
 # Install project dependencies
-RUN pip install -r /app/requirements.txt
-
-# collect static and make migrations
-RUN python manage.py collectstatic --no-input
-RUN python manage.py makemigrations && python manage.py migrate
+RUN pipenv install --skip-lock --system --dev
 
 EXPOSE 8888
 CMD gunicorn cars.wsgi:application --bind 0.0.0.0:$PORT
