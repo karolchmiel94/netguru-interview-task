@@ -42,4 +42,4 @@ RUN python manage.py collectstatic --no-input
 RUN python manage.py makemigrations && python manage.py migrate
 
 EXPOSE 8888
-CMD gunicorn cars.wsgi:application --bind 0.0.0.0:$PORT
+CMD gunicorn app.wsgi:application --bind 0.0.0.0:$PORT

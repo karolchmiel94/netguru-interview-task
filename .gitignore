@@ -130,3 +130,6 @@ dmypy.json
 
 # static dir
 /static
+
+#vscode settings
+.vscode
