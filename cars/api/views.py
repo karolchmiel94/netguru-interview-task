@@ -14,6 +14,7 @@ from .serializers import (
     CarPopularitySerializer, CarSerializer, RatingSerializer
 )
 from ..models import (Car, CarMaker, Rating)
+from .vehicle_api_service import get_car_model
 
 
 class CarViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.ListModelMixin, mixins.DestroyModelMixin):
@@ -23,8 +24,16 @@ class CarViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin, mixins.ListMo
     serializer_class = CarSerializer
 
     def create(self, request, *args, **kwargs):
-        maker = request.data.get('make')
+        maker = urllib.parse.quote_plus(request.data.get('make'))
+        if not maker:
+            return Response('Make name cannot be empty.', status=status.HTTP_400_BAD_REQUEST)
         model = request.data.get('model').lower()
+        if not model:
+            return Response('Model name cannot be empty.', status=status.HTTP_400_BAD_REQUEST)
+        try:
+            car = get_car_model(maker, model)
+        except Exception as error:
+            return Response(error.message, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
         # call CarAPIService and get data about available models for given maker
         url = 'https://vpic.nhtsa.dot.gov/api/vehicles/getmodelsformake/{f}?format=json'.format(f=maker)
         models_request = urllib.request.urlopen(url)
