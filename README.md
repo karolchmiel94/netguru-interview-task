@@ -34,10 +34,33 @@ email: karolch94@gmail.com
 ## Requirements
 
 - Docker
+- memcached
+
+Project uses memcached locally. To be able to use this cache system, you have to have it's dependencies installed.
+
+Mac OS:
+> brew install memcached
+
+Linux:
+> sudo apt-get install memcached
+
 
 <!-- Setup -->
 ## Setup
 
+For cache system to work locally, it has to be run as daemon with
+
+> brew services start memcached
+
+or
+
+> sudo service memcached start
+
+command or by running
+
+> memcached
+
+in a dedicated terminal window.
 
 > git clone https://github.com/karolchmiel94/netguru-interview-task.git
 
