@@ -40,7 +40,9 @@ email: karolch94@gmail.com
 
 
 > git clone https://github.com/karolchmiel94/netguru-interview-task.git
+
 > cd netguru-interview-task
+
 > docker-compose up
 
 Application is up and running at localhost:8000/
