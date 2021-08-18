@@ -3,6 +3,7 @@ from django.test.client import RequestFactory
 from django.urls import reverse
 
 from cars.models import Car, CarMaker, Rating
+from cars.api.vehicle_api_service import NoResultsError, ModelNotFoundError
 
 
 class TestViews(TestCase):
@@ -37,23 +38,24 @@ class TestViews(TestCase):
 
     def test_car_list_POST_no_data(self):
         response = self.client.post(self.cars_list_url, {'make': '', 'model': ''})
-        # print(response)
-        # print(response.data)
 
         self.assertEquals(response.status_code, 400)
-        # self.assertEquals(response.data.get('make'), 'TOYOTA')
-        # self.assertEquals(response.data.get('model'), 'Corolla')
 
     def test_car_list_POST_invalid_model(self):
         response = self.client.post(
             self.cars_list_url, {'make': 'TOYOTA', 'model': 'ttt'}
         )
-        # print(response)
-        # print(response.data)
 
-        self.assertEquals(response.status_code, 400)
-        # self.assertEquals(response.data.get('make'), 'TOYOTA')
-        # self.assertEquals(response.data.get('model'), 'Corolla')
+        self.assertEquals(response.status_code, 422)
+        self.assertEquals(response.data, ModelNotFoundError().message)
+
+    def test_car_list_POST_invalid_maker(self):
+        response = self.client.post(
+            self.cars_list_url, {'make': 'broyota', 'model': 'ttt'}
+        )
+
+        self.assertEquals(response.status_code, 422)
+        self.assertEquals(response.data, NoResultsError().message)
 
     def test_car_detail_DELETE(self):
         response = self.client.delete(self.cars_detail_url)
