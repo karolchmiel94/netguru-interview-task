@@ -3,29 +3,7 @@ import urllib
 
 from django.core.cache import cache
 
-
-class ModelNotFoundError(Exception):
-    """No model has been found."""
-
-    def __init__(self, message='Car with given Model does not exist for this Maker.'):
-        self.message = message
-        super().__init__()
-
-
-class NoResultsError(Exception):
-    """Car maker has not been found."""
-
-    def __init__(self, message='No data. Check if Make name is valid.'):
-        self.message = message
-        super().__init__()
-
-
-class VehicleAPIError(Exception):
-    """Vehicle API returned error"""
-
-    def __init__(self, message='Vehicle API returned error. Check if data is valid.'):
-        self.message = message
-        super().__init__()
+from .exceptions import NoResultsError, ModelNotFoundError, VehicleAPIError
 
 
 def fetch_data_for_maker(make):
@@ -39,13 +17,11 @@ def fetch_data_for_maker(make):
             models_response = json.loads(models_request.read().decode('utf-8'))
             models = models_response.get('Results')
             if len(models) != 0:
-                print('saving {f} to cache'.format(f=make))
                 cache.set(make.lower(), models)
             return models
         except:
             raise VehicleAPIError()
     else:
-        print('retrieved models from cache')
         return models
 
 

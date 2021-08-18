@@ -81,7 +81,15 @@ DATABASES['default']['CONN_MAX_AGE'] = 500
 
 from .cache import get_cache
 
-CACHES = get_cache()
+# Heroku is unable to veify my credit card and I cannot finish configuration for cache engine on their platform.
+# CACHES = get_cache()
+# Until I resolve this issue with Heroku, cache works only locally
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
 
 
 # Password validation

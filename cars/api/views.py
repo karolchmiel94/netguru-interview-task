@@ -9,7 +9,7 @@ from rest_framework import mixins, viewsets
 
 from .serializers import CarPopularitySerializer, CarSerializer, RatingSerializer
 from ..models import Car, CarMaker, Rating
-from .vehicle_api_service import get_car_model
+from vehicle_api.service import get_car_model
 
 
 class CarViewSet(

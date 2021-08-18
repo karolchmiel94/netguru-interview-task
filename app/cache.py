@@ -1,4 +1,5 @@
 def get_cache():
+    pass
     import os
 
     try:

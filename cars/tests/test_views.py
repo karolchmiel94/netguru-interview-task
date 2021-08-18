@@ -3,7 +3,7 @@ from django.test.client import RequestFactory
 from django.urls import reverse
 
 from cars.models import Car, CarMaker, Rating
-from cars.api.vehicle_api_service import (
+from vehicle_api.exceptions import (
     NoResultsError,
     ModelNotFoundError,
     VehicleAPIError,
