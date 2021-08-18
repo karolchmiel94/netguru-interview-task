@@ -17,7 +17,7 @@ email: karolch94@gmail.com
         <br />
         <br />
     </p>
-    <h3 align="center"><a href="http://guarded-ocean-69420.herokuapp.com/">Link to project on Heroku</a></h3>
+    <h5 align="center"><a href="http://guarded-ocean-69420.herokuapp.com/">Link to project on Heroku</a></h5>
 </p>
 
 <!-- TABLE OF CONTENTS -->
