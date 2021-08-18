@@ -11,15 +11,13 @@ email: karolch94@gmail.com
 <!-- PROJECT LOGO -->
 <br/>
 <p align="center">
-    <!-- <a href="https://github.com/karolchmiel94/netguru-interview-task">
-        <img src="" alt="Logo" width="80" height="80">
-    </a> -->
     <h3 align="center"><a href="https://github.com/karolchmiel94/netguru-interview-task">netguru-interview-task</a></h3>
     <p align="center">
         Best RESTful API to save, browse, and rate cars!
         <br />
         <br />
     </p>
+    <h3 align="center"><a href="http://guarded-ocean-69420.herokuapp.com/">Link to project on Heroku</a></h3>
 </p>
 
 <!-- TABLE OF CONTENTS -->
