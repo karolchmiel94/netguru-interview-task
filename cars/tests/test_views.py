@@ -3,7 +3,11 @@ from django.test.client import RequestFactory
 from django.urls import reverse
 
 from cars.models import Car, CarMaker, Rating
-from cars.api.vehicle_api_service import NoResultsError, ModelNotFoundError
+from cars.api.vehicle_api_service import (
+    NoResultsError,
+    ModelNotFoundError,
+    VehicleAPIError,
+)
 
 
 class TestViews(TestCase):
@@ -56,6 +60,14 @@ class TestViews(TestCase):
 
         self.assertEquals(response.status_code, 422)
         self.assertEquals(response.data, NoResultsError().message)
+
+    def test_car_list_POST_invalid_data(self):
+        response = self.client.post(
+            self.cars_list_url, {'make': '%123WSDs', 'model': 'test'}
+        )
+
+        self.assertEquals(response.status_code, 422)
+        self.assertEquals(response.data, VehicleAPIError().message)
 
     def test_car_detail_DELETE(self):
         response = self.client.delete(self.cars_detail_url)

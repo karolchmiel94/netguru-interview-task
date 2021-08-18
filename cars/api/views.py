@@ -1,8 +1,5 @@
 import urllib
-import json
-import time
 
-from django.db import transaction
 from django.shortcuts import get_object_or_404
 
 from rest_framework import status
@@ -26,7 +23,7 @@ class CarViewSet(
     serializer_class = CarSerializer
 
     def create(self, request, *args, **kwargs):
-        maker = urllib.parse.quote_plus(request.data.get('make'))
+        maker = urllib.parse.quote(request.data.get('make'))
         if not maker:
             return Response(
                 'Make name cannot be empty.', status=status.HTTP_400_BAD_REQUEST
@@ -40,9 +37,7 @@ class CarViewSet(
             car = get_car_model(maker, model)
         except Exception as error:
             return Response(error.message, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
-        serializer = self.get_serializer(
-            data={'make': car.get('make'), 'model': car.get('model')}
-        )
+        serializer = self.get_serializer(data=car)
         if serializer.is_valid():
             self.perform_create(serializer)
             headers = self.get_success_headers(serializer.data)
@@ -50,8 +45,7 @@ class CarViewSet(
                 serializer.data, status=status.HTTP_201_CREATED, headers=headers
             )
         else:
-            errors = serializer.errors
-            return Response(errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class RatingViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin):

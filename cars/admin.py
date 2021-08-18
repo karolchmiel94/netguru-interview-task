@@ -2,6 +2,9 @@ from django.contrib import admin
 
 from .models import Car, CarMaker, Rating
 
+admin.site.index_template = 'memcache_status/admin_index.html'
+
+
 @admin.register(Car)
 class CarAdmin(admin.ModelAdmin):
     model = Car
