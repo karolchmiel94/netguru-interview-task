@@ -48,6 +48,8 @@ Linux:
 <!-- Setup -->
 ## Setup
 
+- Run cache system
+
 For cache system to work locally, it has to be run as daemon with
 
 > brew services start memcached
@@ -62,11 +64,15 @@ command or by running
 
 in a dedicated terminal window.
 
+- Clone project
+
 > git clone https://github.com/karolchmiel94/netguru-interview-task.git
 
 > cd netguru-interview-task
 
-> docker-compose up
+- Build and run image
+
+> docker-compose up --build -d
 
 Application is up and running at localhost:8000/
 
