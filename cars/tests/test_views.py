@@ -35,6 +35,26 @@ class TestViews(TestCase):
         self.assertEquals(response.data.get('make'), 'TOYOTA')
         self.assertEquals(response.data.get('model'), 'Corolla')
 
+    def test_car_list_POST_no_data(self):
+        response = self.client.post(self.cars_list_url, {'make': '', 'model': ''})
+        # print(response)
+        # print(response.data)
+
+        self.assertEquals(response.status_code, 400)
+        # self.assertEquals(response.data.get('make'), 'TOYOTA')
+        # self.assertEquals(response.data.get('model'), 'Corolla')
+
+    def test_car_list_POST_invalid_model(self):
+        response = self.client.post(
+            self.cars_list_url, {'make': 'TOYOTA', 'model': 'ttt'}
+        )
+        # print(response)
+        # print(response.data)
+
+        self.assertEquals(response.status_code, 400)
+        # self.assertEquals(response.data.get('make'), 'TOYOTA')
+        # self.assertEquals(response.data.get('model'), 'Corolla')
+
     def test_car_detail_DELETE(self):
         response = self.client.delete(self.cars_detail_url)
 
