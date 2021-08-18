@@ -23,18 +23,19 @@ class CarViewSet(
     serializer_class = CarSerializer
 
     def create(self, request, *args, **kwargs):
-        maker = urllib.parse.quote(request.data.get('make'))
+        maker = request.data.get('make')
         if not maker:
             return Response(
                 'Make name cannot be empty.', status=status.HTTP_400_BAD_REQUEST
             )
+        maker
         model = request.data.get('model').lower()
         if not model:
             return Response(
                 'Model name cannot be empty.', status=status.HTTP_400_BAD_REQUEST
             )
         try:
-            car = get_car_model(maker, model)
+            car = get_car_model(urllib.parse.quote(maker), model)
         except Exception as error:
             return Response(error.message, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
         serializer = self.get_serializer(data=car)
